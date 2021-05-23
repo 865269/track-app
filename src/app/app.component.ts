@@ -1,4 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Activity } from './activity';
+import { ActivityService } from './activity-service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,25 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'track-app';
+
+  public activities: Activity[] = [];
+
+  constructor(private activityService: ActivityService) { }
+
+
+  public getActivities(): void {
+    this.activityService.getActivities().subscribe(
+      (response: Activity[]) => {
+        this.activities = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
+
+  ngOnInit(): void {
+    this.getActivities();
+  }
+
 }
