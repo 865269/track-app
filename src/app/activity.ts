@@ -1,6 +1,6 @@
 export interface Activity {
     id: number;
-    name: string;
+    title: string;
     created: Date;
     description: string;
     imageUrl: string;
