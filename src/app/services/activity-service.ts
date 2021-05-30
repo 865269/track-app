@@ -1,4 +1,4 @@
-import { Activity } from './activity';
+import { Activity } from '../activity';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
@@ -23,5 +23,9 @@ export class ActivityService {
 
     public deleteActivity(activityId: number): Observable<void> {
         return this.http.delete<void>(this.apiUrl + '/activities/delete/' + activityId);
+    }
+
+    public uploadActivityImage(uploadData: FormData): Observable<void> {
+        return this.http.post<void>(this.apiUrl + '/activities/image/upload', uploadData);
     }
 }
