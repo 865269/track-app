@@ -28,19 +28,19 @@ export class AppComponent {
     )
   }
 
-  onFileChanged(event: any) {
+  onFileChanged(event: any, activityId: number) {
 
     this.selectedFile = event.target.files[0];
 
-    this.onUpload();
+    this.onUpload(activityId);
   }
 
-  onUpload() {
+  onUpload(activityId: number) {
 
     const uploadData = new FormData();
     uploadData.append('file', this.selectedFile);
 
-    this.fileUploadService.uploadFile(uploadData)
+    this.activityService.uploadActivityImage(uploadData, activityId)
       .subscribe((response) => {
         console.log("file upload response", response);
       },

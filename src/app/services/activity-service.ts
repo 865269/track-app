@@ -25,7 +25,7 @@ export class ActivityService {
         return this.http.delete<void>(this.apiUrl + '/activities/delete/' + activityId);
     }
 
-    public uploadActivityImage(uploadData: FormData): Observable<void> {
-        return this.http.post<void>(this.apiUrl + '/activities/image/upload', uploadData);
+    public uploadActivityImage(uploadData: FormData, activityId: number): Observable<void> {
+        return this.http.post<void>(this.apiUrl + '/activities/uploadFile/' + activityId, uploadData);
     }
 }
