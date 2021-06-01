@@ -1,4 +1,3 @@
-import { FileUploadService } from './services/file.upload-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Activity } from './activity';
@@ -14,7 +13,7 @@ export class AppComponent {
   public activities: Activity[] = [];
   public selectedFile: any;
 
-  constructor(private activityService: ActivityService, private fileUploadService: FileUploadService) { }
+  constructor(private activityService: ActivityService) { }
 
 
   public getActivities(): void {
@@ -43,6 +42,7 @@ export class AppComponent {
     this.activityService.uploadActivityImage(uploadData, activityId)
       .subscribe((response) => {
         console.log("file upload response", response);
+        this.ngOnInit();
       },
         (error: HttpErrorResponse) => {
           alert(error.message);

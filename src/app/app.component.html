@@ -13,12 +13,12 @@
         <div class="text-center card-box">
           <div class="member-card pt-2 pb-2">
             <div class="thumb-lg member-thumb mx-auto"><img src="{{activity.imageUrl}}"
-                class="rounded-circle img-thumbnail" alt="profile-image"></div>
+                class="rounded-circle img-thumbnail" alt="profile-image" (click)="fileInput.click()"></div>
             <div class="">
-              <h4>{{activity.title}}</h4><input style="display: none" type="file"
+              <br>
+              <h4>{{activity.title}}</h4><input style=" display: none" type="file"
                 (change)="onFileChanged($event, activity.id)" #fileInput>
-              <button (click)="fileInput.click()">Select File</button>
-              <p class="text-muted">{{activity.description}}</p>
+              <p class=" text-muted">{{activity.description}}</p>
             </div>
             <!-- <ul class="social-links list-inline">
               <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips"
