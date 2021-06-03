@@ -2,23 +2,31 @@
 <div class="content">
   <div class="container">
     <div class="row">
-      <div class="col-sm-4"><a href="#custom-modal" class="btn btn-custom waves-effect waves-light mb-4"
-          data-animation="fadein" data-plugin="custommodal" data-overlayspeed="200" data-overlaycolor="#36404a"><i
-            class="mdi mdi-plus"></i> Add Member</a></div>
+      <div class="col-sm-4 "> <button type="button"
+          class="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light " data-toggle="modal"
+          data-target="#exampleModal" (click)="newActivity(null)">Activity <i class="fa fa-plus" aria-hidden="true"></i>
+        </button></div>
+
       <!-- end col -->
     </div>
     <!-- end row -->
+    <br>
     <div class="row">
       <div class="col-lg-4" *ngFor="let activity of activities">
         <div class="text-center card-box">
-          <div class="member-card pt-2 pb-2">
-            <div class="thumb-lg member-thumb mx-auto"><img src="{{activity.imageUrl}}"
-                class="rounded-circle img-thumbnail" alt="profile-image" (click)="fileInput.click()"></div>
+          <div class="member-card pt-2 pb-2 rounded">
+
+
+            <div class="thumb-lg member-thumb mx-auto rounded-circle"
+              style="background-position: center; background-repeat: no-repeat; background-size: cover; max-width: 300px; max-height: 150px;"
+              [style.background-image]="'url('+activity?.imageUrl+')'" (click)="fileInput.click()"></div>
+
+
             <div class="">
               <br>
-              <h4>{{activity.title}}</h4><input style=" display: none" type="file"
+              <h4>{{activity?.title}}</h4><input style=" display: none" type="file"
                 (change)="onFileChanged($event, activity.id)" #fileInput>
-              <p class=" text-muted">{{activity.description}}</p>
+              <p class="text-muted">{{activity?.description}}</p>
             </div>
             <!-- <ul class="social-links list-inline">
               <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips"
@@ -82,5 +90,29 @@
   <!-- container -->
 </div>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Activity</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <router-outlet></router-outlet>

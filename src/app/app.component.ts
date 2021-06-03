@@ -50,6 +50,10 @@ export class AppComponent {
       );
   }
 
+  newActivity(activity: Activity) {
+    console.log("activity");
+  }
+
   ngOnInit(): void {
     this.getActivities();
   }
