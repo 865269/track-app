@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-4 "> <button type="button"
           class="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light " data-toggle="modal"
-          data-target="#exampleModal" (click)="newActivity(null)">Activity <i class="fa fa-plus" aria-hidden="true"></i>
+          data-target="#exampleModal">Activity <i class="fa fa-plus" aria-hidden="true"></i>
         </button></div>
 
       <!-- end col -->
@@ -13,20 +13,51 @@
     <br>
     <div class="row">
       <div class="col-lg-4" *ngFor="let activity of activities">
+
         <div class="text-center card-box">
+          <div class="row" style="display: flex;
+          justify-content: space-between;">
+            <div class="pull-left" style="padding-left: 3%;">
+              <p>{{activity?.created | date}}</p>
+            </div>
+
+            <div class="pull-right" style="padding-right: 3%; cursor: pointer; display: inline">
+
+              <i class=" fa fa-floppy-o" aria-hidden="true"
+                (click)="updateActivity(activity); activity.canEditCode = false;" *ngIf="activity.canEditCode"></i>
+              <i class=" fa fa-pencil" aria-hidden="true" (click)="activity.canEditCode = true"
+                *ngIf="!activity.canEditCode"></i> |
+              <i class="fa fa-trash" aria-hidden="true" (click)="deleteActivity(activity.id, activity.title)"></i>
+
+            </div>
+          </div>
+
+
           <div class="member-card pt-2 pb-2 rounded">
 
-
             <div class="thumb-lg member-thumb mx-auto rounded-circle"
-              style="background-position: center; background-repeat: no-repeat; background-size: cover; max-width: 300px; max-height: 150px;"
+              style="background-position: center; background-repeat: no-repeat; background-size: cover; max-width: 300px; max-height: 150px; cursor: pointer;"
               [style.background-image]="'url('+activity?.imageUrl+')'" (click)="fileInput.click()"></div>
 
 
-            <div class="">
+            <div>
               <br>
-              <h4>{{activity?.title}}</h4><input style=" display: none" type="file"
-                (change)="onFileChanged($event, activity.id)" #fileInput>
-              <p class="text-muted">{{activity?.description}}</p>
+
+              <div class="form-group">
+                <h4 *ngIf="!activity.canEditCode">{{activity?.title}}</h4>
+                <input *ngIf="activity.canEditCode" [(ngModel)]="activity.title" type="text" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <p class="text-muted" *ngIf="!activity.canEditCode">{{activity?.description}}</p>
+                <textarea *ngIf="activity.canEditCode" [(ngModel)]="activity.description" type="text"
+                  class="form-control"></textarea>
+              </div>
+
+
+              <input style=" display: none" type="file" (change)="onFileChanged($event, activity.id)" #fileInput>
+
+
             </div>
             <!-- <ul class="social-links list-inline">
               <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips"
@@ -105,12 +136,28 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+
+        <form #addActivityForm="ngForm" (ngSubmit)="addActivity(addActivityForm)">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" class="form-control" id="title" placeholder="Title" required ngModel>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" name="description" class="form-control" id="description" placeholder="Description"
+              required ngModel>
+          </div>
+
+
+
+          <div class="modal-footer">
+            <button type="button" id="add-activity-close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button [disabled]="addActivityForm.invalid" type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+
     </div>
   </div>
 </div>

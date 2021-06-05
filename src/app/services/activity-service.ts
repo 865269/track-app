@@ -21,6 +21,10 @@ export class ActivityService {
         return this.http.post<Activity>(this.apiUrl + '/activities/add', activity);
     }
 
+    public updateActivity(activity: Activity): Observable<Activity> {
+        return this.http.put<Activity>(this.apiUrl + '/activities/update', activity);
+    }
+
     public deleteActivity(activityId: number): Observable<void> {
         return this.http.delete<void>(this.apiUrl + '/activities/delete/' + activityId);
     }

@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Activity } from './activity';
 import { ActivityService } from './services/activity-service';
 
@@ -30,7 +31,6 @@ export class AppComponent {
   onFileChanged(event: any, activityId: number) {
 
     this.selectedFile = event.target.files[0];
-
     this.onUpload(activityId);
   }
 
@@ -50,8 +50,43 @@ export class AppComponent {
       );
   }
 
-  newActivity(activity: Activity) {
-    console.log("activity");
+  addActivity(addActivityForm: NgForm): void {
+    document.getElementById('add-activity-close')?.click();
+    this.activityService.addActivity(addActivityForm.value).subscribe(
+      (response: Activity) => {
+        this.getActivities();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+    addActivityForm.reset();
+  }
+
+  updateActivity(activity: Activity): void {
+    this.activityService.updateActivity(activity).subscribe(
+      (response: Activity) => {
+        this.getActivities();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
+
+  deleteActivity(activityId: number, activityTitle: string): void {
+
+    if (confirm("Are you sure you want to delete " + activityTitle)) {
+      this.activityService.deleteActivity(activityId).subscribe(
+        () => {
+          this.getActivities();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      )
+    }
+
   }
 
   ngOnInit(): void {
