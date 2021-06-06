@@ -1,7 +1,12 @@
-import { NgModule } from '@angular/core';
+import { ActivitiesComponent } from './activities/activities.component';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ActivityEventsComponent } from './activity-events/activity-events.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: 'activities', component: ActivitiesComponent },
+  { path: 'activities/:id/events', component: ActivityEventsComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

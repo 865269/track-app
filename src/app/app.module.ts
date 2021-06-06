@@ -5,10 +5,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ActivityEventsComponent } from './activity-events/activity-events.component';
+import { ActivitiesComponent } from './activities/activities.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ActivityEventsComponent,
+    ActivitiesComponent
   ],
   imports: [
     BrowserModule,

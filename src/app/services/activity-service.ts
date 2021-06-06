@@ -1,4 +1,4 @@
-import { Activity } from '../activity';
+import { Activity } from '../activities/activity';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
@@ -12,6 +12,10 @@ export class ActivityService {
     private apiUrl = environment.apiBaseUrl;
 
     constructor(private http: HttpClient) { }
+
+    public getActivity(id: number): Observable<Activity> {
+        return this.http.get<Activity>(this.apiUrl + '/activities/' + id);
+    }
 
     public getActivities(): Observable<Activity[]> {
         return this.http.get<Activity[]>(this.apiUrl + '/activities/all/');

@@ -4,5 +4,6 @@ export interface Activity {
     created?: Date;
     description?: string;
     imageUrl?: string;
+    events: Event[];
     [key: string]: any;
 }
