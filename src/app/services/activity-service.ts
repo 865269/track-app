@@ -33,6 +33,10 @@ export class ActivityService {
         return this.http.delete<void>(this.apiUrl + '/activities/delete/' + activityId);
     }
 
+    public addEvent(event: Event, activityId: number): Observable<Event> {
+        return this.http.post<Event>(this.apiUrl + '/activities/' + activityId + '/event/add', event);
+    }
+
     public uploadActivityImage(uploadData: FormData, activityId: number): Observable<void> {
         return this.http.post<void>(this.apiUrl + '/activities/uploadFile/' + activityId, uploadData);
     }

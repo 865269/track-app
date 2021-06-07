@@ -67,8 +67,8 @@ export class ActivityEventsComponent implements OnInit {
 
   addEvent(addEventForm: NgForm): void {
     document.getElementById('add-event-close')?.click();
-    this.activityService.addActivity(addEventForm.value).subscribe(
-      (response: Activity) => {
+    this.activityService.addEvent(addEventForm.value, this.id).subscribe(
+      (response: Event) => {
         this.getActivity(this.id);
       },
       (error: HttpErrorResponse) => {

@@ -123,8 +123,8 @@
                     </div>
 
 
-                    <select name="repeatSelect" id="repeatSelect" ng-model="activity.rating">
-                        <option *ngFor="let rating of ratings" [ngValue]="rating.id">{{rating.name}}</option>
+                    <select name="rating" id="rating" ngModel>
+                        <option *ngFor="let rating of ratings" [ngValue]="rating.name">{{rating.name}}</option>
                     </select>
 
 
