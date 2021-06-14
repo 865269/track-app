@@ -1,3 +1,5 @@
+import { Event } from './../activity-events/event';
+
 export interface Activity {
     id: number;
     title: string;

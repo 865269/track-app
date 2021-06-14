@@ -76,7 +76,7 @@
 
             </div>
             <ul class="timeline ">
-                <li *ngFor="let event of activity.event">
+                <li *ngFor="let event of activity.events">
                     <h4>{{event?.title}}</h4>
                     <a href="#" class="float-right">{{event?.created | date:'yyyy-MM-dd hh:mm:ss'}}</a>
                     <p>{{event?.description}}</p>

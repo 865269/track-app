@@ -20,6 +20,7 @@ export class ActivitiesComponent implements OnInit {
   public getActivities(): void {
     this.activityService.getActivities().subscribe(
       (response: Activity[]) => {
+        console.log("all activities", response)
         this.activities = response;
       },
       (error: HttpErrorResponse) => {

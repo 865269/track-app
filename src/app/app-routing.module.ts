@@ -5,7 +5,8 @@ import { ActivityEventsComponent } from './activity-events/activity-events.compo
 
 const routes: Routes = [
   { path: 'activities', component: ActivitiesComponent },
-  { path: 'activities/:id/events', component: ActivityEventsComponent }
+  { path: 'activities/:id/events', component: ActivityEventsComponent },
+  { path: '', redirectTo: 'activities', pathMatch: 'full' }
 ];
 
 @NgModule({
