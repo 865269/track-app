@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ActivityEventsComponent } from './activity-events/activity-events.component';
 import { ActivitiesComponent } from './activities/activities.component';
+import { OrderByPipe } from './order-by.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ActivityEventsComponent,
-    ActivitiesComponent
+    ActivitiesComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,

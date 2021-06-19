@@ -88,3 +88,4 @@ export class ActivityEventsComponent implements OnInit {
   }
 
 }
+

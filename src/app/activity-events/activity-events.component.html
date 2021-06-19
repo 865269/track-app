@@ -76,14 +76,14 @@
 
             </div>
             <ul class="timeline ">
-                <li *ngFor="let event of activity.events">
+                <li *ngFor="let event of activity.events | orderBy:'desc':'created'">
                     <h4>{{event?.title}}</h4>
-                    <a href="#" class="float-right">{{event?.created | date:'yyyy-MM-dd hh:mm:ss'}}</a>
+                    <a href="#" class="float-right">{{event?.created | date:'yyyy-MM-dd hh:mm aa'}}</a>
                     <p>{{event?.description}}</p>
                 </li>
                 <li *ngIf="activity.events.length == 0">
                     <h4>Activity has no events!</h4>
-                    <a href="#" class="float-right">{{currentDate | date:'yyyy-MM-dd hh:mm:ss'}}</a>
+                    <a href="#" class="float-right">{{currentDate | date:'yyyy-MM-dd hh:mm aa'}}</a>
                     <p>Events added to this activity will show here!</p>
                 </li>
             </ul>
