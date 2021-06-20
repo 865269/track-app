@@ -5,7 +5,7 @@
 
         <div class="col-md-4">
 
-            <div class="card-box text-center" style="width: 100%">
+            <div class="card-box text-center" style="width: 100%; background-color: darkgray;">
                 <div class="row" style="display: flex; justify-content: space-between;">
 
                     <div class="pull-left" style="padding-left: 3%;">
@@ -23,7 +23,6 @@
                     </div>
                 </div>
 
-
                 <div class="member-card pt-2 pb-2 rounded">
 
                     <div class="thumb-lg member-thumb mx-auto rounded-circle"
@@ -31,10 +30,8 @@
                         [style.background-image]="'url('+activity?.imageUrl+')'" (click)="fileInput.click()">
                     </div>
 
-
                     <div>
                         <br>
-
                         <div class="form-group">
                             <h4 *ngIf="!activity.canEditCode">{{activity?.title}}</h4>
                             <input *ngIf="activity.canEditCode" [(ngModel)]="activity.title" type="text"
@@ -42,48 +39,65 @@
                         </div>
 
                         <div class="form-group">
-                            <p class="text-muted" *ngIf="!activity.canEditCode">{{activity?.description}}</p>
+                            <p class="" *ngIf="!activity.canEditCode">{{activity?.description}}</p>
                             <textarea *ngIf="activity.canEditCode" [(ngModel)]="activity.description" type="text"
                                 class="form-control"></textarea>
                         </div>
 
-
                         <input style=" display: none" type="file" (change)="onFileChanged($event, activity.id)"
                             #fileInput>
-
-
                     </div>
-
-
-
 
                 </div>
             </div>
-
         </div>
 
-
         <div class="col-md-8 ">
-            <div style="display: flex; justify-content: space-between;">
+            <div style="display: flex; justify-content: space-between; padding-bottom: 2%;">
 
                 <h3>Events</h3>
+
                 <div>
-                    <button type=" button" class="btn btn-primary mt-1 btn-rounded " data-toggle="modal"
+                    <button type="button" class="btn btn-primary mt-1 btn-rounded " data-toggle="modal"
                         data-target="#eventModel">Event
                         <i class=" fa fa-plus" aria-hidden="true"></i>
                     </button>
+                    <a type="button" class="btn btn-primary mt-1 btn-rounded " routerLink="/activities">Back
+                        <i class=" fa fa-backward" aria-hidden="true"></i></a>
                 </div>
 
             </div>
             <ul class="timeline ">
-                <li *ngFor="let event of activity.events | orderBy:'desc':'created'">
-                    <h4>{{event?.title}}</h4>
-                    <a href="#" class="float-right">{{event?.created | date:'yyyy-MM-dd hh:mm aa'}}</a>
-                    <p>{{event?.description}}</p>
+
+                <li class="event" *ngFor="let event of activity.events | orderBy:'desc':'created'">
+
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>
+                            <h4>{{event?.title}}</h4>
+                            <p>{{event?.description}}</p>
+                        </div>
+
+                        <div>
+                            <button *ngIf="event.rating == 'EXCELLENT' || event.rating == 'GOOD'" type="button" ng
+                                class="btn btn-primary mt-1 btn-rounded fixed-width green-rating">{{event?.rating}}
+                            </button>
+                            <button *ngIf="event.rating == 'AVERAGE'" type="button" ng
+                                class="btn btn-primary mt-1 btn-rounded fixed-width orange-rating">{{event?.rating}}
+                            </button>
+                            <button *ngIf="event.rating == 'POOR' || event.rating == 'BELOW_AVERAGE'" type="button" ng
+                                class="btn btn-primary mt-1 btn-rounded fixed-width red-rating">{{event?.rating.replace("_","
+                                ")}}
+                            </button>
+                            <p>{{event?.created | date:'yyyy-MM-dd hh:mm aa'}}</p>
+
+                        </div>
+                    </div>
+
                 </li>
-                <li *ngIf="activity.events.length == 0">
+
+                <li class="event" *ngIf="activity.events.length == 0">
                     <h4>Activity has no events!</h4>
-                    <a href="#" class="float-right">{{currentDate | date:'yyyy-MM-dd hh:mm aa'}}</a>
+                    <p class="float-right">{{currentDate | date:'yyyy-MM-dd hh:mm aa'}}</p>
                     <p>Events added to this activity will show here!</p>
                 </li>
             </ul>
@@ -91,9 +105,6 @@
 
     </div>
 </div>
-<!-- <div class="text-muted mt-5 mb-5 text-center small">by : <a class="text-muted" target="_blank"
-        href="http://totoprayogo.com">totoprayogo.com</a></div> -->
-
 
 <!-- Modal -->
 <div class="modal fade" id="eventModel" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
@@ -122,11 +133,13 @@
                             placeholder="Description" required ngModel>
                     </div>
 
-
-                    <select name="rating" id="rating" ngModel>
-                        <option *ngFor="let rating of ratings" [ngValue]="rating.name">{{rating.name}}</option>
-                    </select>
-
+                    <div class="form-group">
+                        <label for="rating">Rating</label>
+                        <select name="rating" id="rating" class="form-control" ngModel>
+                            <option *ngFor="let rating of ratings" [ngStyle]="{'color': rating.colour}"
+                                [ngValue]="rating.name">{{rating.name}}</option>
+                        </select>
+                    </div>
 
                     <div class="modal-footer">
                         <button type="button" id="add-event-close" class="btn btn-secondary"

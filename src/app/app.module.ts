@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ActivityEventsComponent } from './activity-events/activity-events.component';
 import { ActivitiesComponent } from './activities/activities.component';
-import { OrderByPipe } from './order-by.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 @NgModule({
   declarations: [

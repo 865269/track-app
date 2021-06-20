@@ -17,7 +17,8 @@ export class ActivityEventsComponent implements OnInit {
   public selectedFile: any;
   public currentDate: Date = new Date();
   public id: number = -1;
-  public ratings: Rating[] = [{ id: 1, name: "POOR" }, { id: 2, name: "BELOW AVERAGE" }, { id: 3, name: "AVERAGE" }, { id: 4, name: "GOOD" }, { id: 5, name: "EXCELLENT" }];
+  public ratings: Rating[] = [{ id: 1, name: "POOR", colour: "red" }, { id: 2, name: "BELOW_AVERAGE", colour: "red" }, { id: 3, name: "AVERAGE", colour: "orange" },
+  { id: 4, name: "GOOD", colour: "green" }, { id: 5, name: "EXCELLENT", colour: "green" }];
 
   constructor(private activityService: ActivityService, private route: ActivatedRoute) { }
 
@@ -25,6 +26,7 @@ export class ActivityEventsComponent implements OnInit {
     this.activityService.getActivity(id).subscribe(
       (response: Activity) => {
         this.activity = response;
+        console.log("activity", this.activity)
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

@@ -40,4 +40,10 @@ export class ActivityService {
     public uploadActivityImage(uploadData: FormData, activityId: number): Observable<void> {
         return this.http.post<void>(this.apiUrl + '/activities/uploadFile/' + activityId, uploadData);
     }
+
+    public getPageOfActivities(size: number, page: number): Observable<any> {
+        return this.http.get<any>(this.apiUrl + '/activities/page/' + size + '/' + page);
+    }
+
+
 }

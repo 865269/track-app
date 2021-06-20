@@ -1,3 +1,4 @@
+import { Rating } from './rating';
 import { Activity } from "../activities/activity";
 
 export interface Event {
@@ -5,7 +6,7 @@ export interface Event {
     title: string;
     created: Date;
     description: string;
-    rating: number
+    rating: Rating;
     activity: Activity;
     [key: string]: any;
 }

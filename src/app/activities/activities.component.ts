@@ -13,6 +13,10 @@ export class ActivitiesComponent implements OnInit {
 
   public activities: Activity[] = [];
   public selectedFile: any;
+  public currentPageNumber: number = 0;
+  public totalPages: number = 0;
+  public pages: number[] = [];
+
 
   constructor(private activityService: ActivityService) { }
 
@@ -55,7 +59,7 @@ export class ActivitiesComponent implements OnInit {
     document.getElementById('add-activity-close')?.click();
     this.activityService.addActivity(addActivityForm.value).subscribe(
       (response: Activity) => {
-        this.getActivities();
+        this.getPageOfActivities(this.currentPageNumber, 3);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -67,7 +71,7 @@ export class ActivitiesComponent implements OnInit {
   updateActivity(activity: Activity): void {
     this.activityService.updateActivity(activity).subscribe(
       (response: Activity) => {
-        this.getActivities();
+        this.getPageOfActivities(this.currentPageNumber, 3);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -90,8 +94,28 @@ export class ActivitiesComponent implements OnInit {
 
   }
 
+  public getPageOfActivities(page: number, size: number): void {
+
+    if (page >= 0 || page <= this.totalPages) {
+      this.activityService.getPageOfActivities(page, size).subscribe(
+        (response: any) => {
+          console.log("page activities", response)
+          this.activities = response.content;
+          this.currentPageNumber = response.number;
+          this.totalPages = response.totalPages;
+          this.pages = Array.from(Array(response.totalPages).keys());
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      )
+    }
+
+
+  }
+
   ngOnInit(): void {
-    this.getActivities();
+    this.getPageOfActivities(0, 3);
   }
 
 }
