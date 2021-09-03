@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivityService } from '../services/activity-service';
 import { Activity } from './activity';
@@ -16,6 +16,7 @@ export class ActivitiesComponent implements OnInit {
   public currentPageNumber: number = 0;
   public totalPages: number = 0;
   public pages: number[] = [];
+  public innerWidth: any;
 
 
   constructor(private activityService: ActivityService) { }
@@ -114,8 +115,26 @@ export class ActivitiesComponent implements OnInit {
 
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.innerWidth = event.target.innerWidth;
+    this.getPageForScreenSize(this.innerWidth, this.currentPageNumber);
+  }
+
   ngOnInit(): void {
-    this.getPageOfActivities(0, 3);
+    this.innerWidth = window.innerWidth;
+    this.getPageForScreenSize(this.innerWidth, 0);
+
+  }
+
+  public getPageForScreenSize(width: number, page: number): void {
+    if (width <= 700) {
+      this.getPageOfActivities(page, 1);
+    } else if (width > 700 && width <= 1000) {
+      this.getPageOfActivities(page, 2);
+    } else {
+      this.getPageOfActivities(page, 3);
+    }
   }
 
 }

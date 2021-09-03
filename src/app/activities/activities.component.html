@@ -5,14 +5,15 @@
 
         <div class="columns">
             <div class="column">
-                <button class="button is-success is-rounded" data-toggle="modal"
-                    data-target="#exampleModal"><strong>Activity</strong></button>
+                <button class="button is-success is-rounded modal-button"
+                    data-target="#modal"><strong>Activity</strong></button>
             </div>
         </div>
 
         <div class="container" style="display: flex; flex-direction: row; justify-content: space-around;">
 
-            <div class="card" *ngFor="let activity of activities" style="width: 30%; height: 10%;">
+            <div class="card" *ngFor="let activity of activities"
+                style="width: 30%; height: 10%; min-width: 327.6px; min-height: 522px">
                 <div class="card-image">
                     <figure class="image is-4by3">
                         <img src="{{activity?.imageUrl}}" alt="Placeholder image" (click)="fileInput.click()"
@@ -48,7 +49,7 @@
 
                         <br>
 
-                        <time class="is-pulled-right">{{activity?.created | date}}</time>
+                        <p class="text-muted is-pulled-right">Created <time>{{activity?.created | date}}</time></p>
                     </div>
                 </div>
 
@@ -78,22 +79,22 @@
         <div>
             <nav class="pagination" role="navigation" aria-label="pagination">
 
-                <a *ngIf="currentPageNumber == 0" class="pagination-previous"
+                <a *ngIf="currentPageNumber != 0" class="pagination-previous"
                     (click)="getPageOfActivities(currentPageNumber-1, 3)">Previous</a>
-                <a *ngIf="page != currentPageNumber" class="pagination-previous"
+                <a *ngIf="currentPageNumber == 0" class="pagination-previous"
                     (click)="getPageOfActivities(currentPageNumber-1, 3)" disabled>Previous</a>
 
-                <a *ngIf="page != currentPageNumber" class="pagination-next"
+                <a *ngIf="currentPageNumber != (totalPages-1)" class="pagination-next"
                     (click)="getPageOfActivities(currentPageNumber+1, 3)">Next page</a>
-                <a *ngIf="page != currentPageNumber" class="pagination-next"
+                <a *ngIf="currentPageNumber == (totalPages-1)" class="pagination-next"
                     (click)="getPageOfActivities(currentPageNumber+1, 3)" disabled>Next page</a>
 
                 <ul class="pagination-list">
-                    <li style="border-color: black;" *ngFor="let page of pages">
-                        <a *ngIf="page != currentPageNumber" class="pagination-link"
+                    <li *ngFor="let page of pages">
+                        <a *ngIf="page != currentPageNumber" class="pagination-link" style="border-color: black;"
                             (click)="getPageOfActivities(page, 3)">{{page+1}}</a>
                         <a *ngIf="page == currentPageNumber" class="pagination-link is-current"
-                            (click)="getPageOfActivities(page, 3)">{{page+1}}</a>
+                            style="border-color: black;" (click)="getPageOfActivities(page, 3)">{{page+1}}</a>
                     </li>
 
                 </ul>
@@ -104,46 +105,59 @@
     </div>
 </section>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div id="modal" class="modal">
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <h5 class="modal-title">New Activity</h5>
+            <button class="delete modal-close" aria-label="close"></button>
+        </header>
 
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Activity</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+        <section class="modal-card-body">
+            <form #addActivityForm="ngForm" (ngSubmit)="addActivity(addActivityForm)">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" class="form-control" id="title" placeholder="Title" required
+                        ngModel>
+                </div>
 
-                <form #addActivityForm="ngForm" (ngSubmit)="addActivity(addActivityForm)">
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" name="title" class="form-control" id="title" placeholder="Title" required
-                            ngModel>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" name="description" class="form-control" id="description"
-                            placeholder="Description" required ngModel>
-                    </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" name="description" class="form-control" id="description"
+                        placeholder="Description" required ngModel>
+                </div>
 
 
 
-                    <div class="modal-footer">
-                        <button type="button" id="add-activity-close" class="btn btn-secondary"
-                            data-dismiss="modal">Close</button>
-                        <button [disabled]="addActivityForm.invalid" type="submit" class="btn btn-primary">Save
-                            changes</button>
-                    </div>
-                </form>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" id="add-activity-close" class="button is-danger modal-close"
+                        aria-label="close">Close</button>
 
-        </div>
+                    <button [disabled]="addActivityForm.invalid" type="submit" class="button is-success">Save
+                        changes</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button" aria-label="close">Cancel</button>
+        </footer> -->
     </div>
 </div>
+
+<script>
+    $(".modal-button").click(function () {
+        var target = $(this).data("target");
+        $("html").addClass("is-clipped");
+        $(target).addClass("is-active");
+    });
+
+    $(".modal-close").click(function () {
+        $("html").removeClass("is-clipped");
+        $(this).parent().removeClass("is-active");
+    });
+</script>
+
 
 
 <!-- <div class="row">
