@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { ActivityEventsComponent } from './activity-events/activity-events.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
+import { NgPipesModule } from 'ngx-pipes';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { OrderByPipe } from './pipes/order-by.pipe';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgPipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,112 +1,217 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-<div class="container mt-5 mb-5">
-    <div class="row">
+<section class="section">
+    <div class="container">
 
-        <div class="col-md-4">
+        <div class="columns">
+            <div class="column is-one-third">
+                <div class="container">
+                    <div class="card" style="width: 30%; height: 10%; min-width: 327.6px; min-height: 522px;">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="{{activity?.imageUrl}}" alt="Placeholder image" (click)="fileInput.click()"
+                                    style="cursor: pointer">
+                            </figure>
 
-            <div class="card-box text-center" style="width: 100%; background-color: darkgray;">
-                <div class="row" style="display: flex; justify-content: space-between;">
+                        </div>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <div class="form-group">
+                                        <p class="title is-4" *ngIf="!activity.canEditCode">{{activity?.title}}</p>
 
-                    <div class="pull-left" style="padding-left: 3%;">
-                        <p>{{activity?.created | date}}</p>
-                    </div>
+                                        <input *ngIf="activity.canEditCode" [(ngModel)]="activity.title" type="text"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="pull-right" style="padding-right: 3%; cursor: pointer; display: inline">
+                            <div class="content">
+                                <div class="form-group">
+                                    <p class="text-muted" *ngIf="!activity.canEditCode">
+                                        {{truncateDescription(activity?.description)}}</p>
+                                    <textarea *ngIf="activity.canEditCode" [(ngModel)]="activity.description"
+                                        type="text" class="form-control"></textarea>
+                                </div>
 
-                        <i class=" fa fa-floppy-o" aria-hidden="true"
-                            (click)="updateActivity(activity); activity.canEditCode = false;"
-                            *ngIf="activity.canEditCode"></i>
-                        <i class=" fa fa-pencil" aria-hidden="true" (click)="activity.canEditCode = true"
-                            *ngIf="!activity.canEditCode"></i>
+                                <input style=" display: none" type="file" (change)="onFileChanged($event, activity.id)"
+                                    #fileInput>
 
-                    </div>
-                </div>
+                                <br>
 
-                <div class="member-card pt-2 pb-2 rounded">
-
-                    <div class="thumb-lg member-thumb mx-auto rounded-circle"
-                        style="background-position: center; background-repeat: no-repeat; background-size: cover; max-width: 300px; max-height: 150px; cursor: pointer;"
-                        [style.background-image]="'url('+activity?.imageUrl+')'" (click)="fileInput.click()">
-                    </div>
-
-                    <div>
-                        <br>
-                        <div class="form-group">
-                            <h4 *ngIf="!activity.canEditCode">{{activity?.title}}</h4>
-                            <input *ngIf="activity.canEditCode" [(ngModel)]="activity.title" type="text"
-                                class="form-control" />
+                                <p class="text-muted is-pulled-right">Created <time>{{activity?.created | date}}</time>
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <p class="" *ngIf="!activity.canEditCode">{{activity?.description}}</p>
-                            <textarea *ngIf="activity.canEditCode" [(ngModel)]="activity.description" type="text"
-                                class="form-control"></textarea>
-                        </div>
+                        <footer class="card-footer">
+                            <a class="card-footer-item" routerLink="/activities/{{activity?.id}}/events">
+                                <p class="text-muted">{{activity?.events?.length}} Event(s)</p>
+                            </a>
 
-                        <input style=" display: none" type="file" (change)="onFileChanged($event, activity.id)"
-                            #fileInput>
+                            <a class="card-footer-item" *ngIf="activity.canEditCode"> <i class="fa fa-floppy-o"
+                                    aria-hidden="true"
+                                    (click)="updateActivity(activity); activity.canEditCode = false;"></i></a>
+
+                            <a class="card-footer-item" *ngIf="!activity.canEditCode"> <i class=" fa fa-pencil"
+                                    aria-hidden="true" (click)="activity.canEditCode = true"></i></a>
+
+                            <!-- <a class="card-footer-item"><i class="fa fa-trash" aria-hidden="true"
+                                (click)="deleteActivity(activity.id, activity.title)"></i></a> -->
+                        </footer>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+
+                <div class="columns">
+                    <div class="column is-three-quarters">
+                        <h1 class="is-size-3">Events</h1>
+                    </div>
+                    <div class="column">
+                        <!-- <button id="modal-open" class="button is-success is-rounded" data-target="#modal"
+                            (click)="openModal()" style="margin-right: 3%;">Event</button> -->
+
+                        <a type="button" class="button is-link is-rounded is-pulled-right"
+                            routerLink="/activities">Back</a>
                     </div>
 
                 </div>
+
+                <article class="media">
+
+                    <div class="media-content">
+                        <div class="field">
+                            <p class="control">
+                                <textarea class="textarea" placeholder="Add event details..."></textarea>
+                            </p>
+                        </div>
+                        <div class="columns">
+                            <div class="column is-offset-one-fifth">
+                                <div class="field">
+                                    <select name="rating" id="rating" class="form-control" ngModel>
+                                        <option value="" selected disabled hidden>How did the event go...?</option>
+                                        <option *ngFor="let rating of ratings" [ngStyle]="{'color': rating.colour}"
+                                            [ngValue]="rating.name">{{rating.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <p class="control">
+                                        <button class="button">Post Event</button>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="media" *ngFor="let event of activity.events | orderBy:'desc':'created'">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>{{event?.title}}</strong>
+                                <br>
+                                {{event?.description}}
+                                <br>
+                                <small><a>Like</a> · <a>Reply</a> · {{parseDate(event?.created) | timeAgo}}</small>
+                            </p>
+                        </div>
+
+                    </div>
+                </article>
+
+
+                <!-- <ul class="timeline ">
+
+                    <li class="event" *ngFor="let event of activity.events | orderBy:'desc':'created'">
+
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <h4>{{event?.title}}</h4>
+                                <p>{{event?.description}}</p>
+                            </div>
+
+                            <div>
+                                <button *ngIf="event.rating == 'EXCELLENT' || event.rating == 'GOOD'" type="button" ng
+                                    class="btn btn-primary mt-1 btn-rounded fixed-width green-rating">{{event?.rating}}
+                                </button>
+                                <button *ngIf="event.rating == 'AVERAGE'" type="button" ng
+                                    class="btn btn-primary mt-1 btn-rounded fixed-width orange-rating">{{event?.rating}}
+                                </button>
+                                <button *ngIf="event.rating == 'POOR' || event.rating == 'BELOW_AVERAGE'" type="button"
+                                    ng
+                                    class="btn btn-primary mt-1 btn-rounded fixed-width red-rating">{{event?.rating.replace("_","
+                                    ")}}
+                                </button>
+                                <p>{{event?.created | date:'yyyy-MM-dd hh:mm aa'}}</p>
+
+                            </div>
+                        </div>
+
+                    </li>
+
+                    <li class="event" *ngIf="activity.events.length == 0">
+                        <h4>Activity has no events!</h4>
+                        <p class="float-right">{{currentDate | date:'yyyy-MM-dd hh:mm aa'}}</p>
+                        <p>Events added to this activity will show here!</p>
+                    </li>
+                </ul> -->
             </div>
         </div>
 
-        <div class="col-md-8 ">
-            <div style="display: flex; justify-content: space-between; padding-bottom: 2%;">
 
-                <h3>Events</h3>
 
-                <div>
-                    <button type="button" class="btn btn-primary mt-1 btn-rounded " data-toggle="modal"
-                        data-target="#eventModel">Event
-                        <i class=" fa fa-plus" aria-hidden="true"></i>
-                    </button>
-                    <a type="button" class="btn btn-primary mt-1 btn-rounded " routerLink="/activities">Back
-                        <i class=" fa fa-backward" aria-hidden="true"></i></a>
-                </div>
-
-            </div>
-            <ul class="timeline ">
-
-                <li class="event" *ngFor="let event of activity.events | orderBy:'desc':'created'">
-
-                    <div style="display: flex; justify-content: space-between;">
-                        <div>
-                            <h4>{{event?.title}}</h4>
-                            <p>{{event?.description}}</p>
-                        </div>
-
-                        <div>
-                            <button *ngIf="event.rating == 'EXCELLENT' || event.rating == 'GOOD'" type="button" ng
-                                class="btn btn-primary mt-1 btn-rounded fixed-width green-rating">{{event?.rating}}
-                            </button>
-                            <button *ngIf="event.rating == 'AVERAGE'" type="button" ng
-                                class="btn btn-primary mt-1 btn-rounded fixed-width orange-rating">{{event?.rating}}
-                            </button>
-                            <button *ngIf="event.rating == 'POOR' || event.rating == 'BELOW_AVERAGE'" type="button" ng
-                                class="btn btn-primary mt-1 btn-rounded fixed-width red-rating">{{event?.rating.replace("_","
-                                ")}}
-                            </button>
-                            <p>{{event?.created | date:'yyyy-MM-dd hh:mm aa'}}</p>
-
-                        </div>
-                    </div>
-
-                </li>
-
-                <li class="event" *ngIf="activity.events.length == 0">
-                    <h4>Activity has no events!</h4>
-                    <p class="float-right">{{currentDate | date:'yyyy-MM-dd hh:mm aa'}}</p>
-                    <p>Events added to this activity will show here!</p>
-                </li>
-            </ul>
-        </div>
 
     </div>
-</div>
+</section>
 
-<!-- Modal -->
+<!-- <div id="modal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <h3 class="modal-title">Create new Activity</h3>
+        </header>
+
+        <section class="modal-card-body">
+            <form #addActivityForm="ngForm" (ngSubmit)="addActivity(addActivityForm)">
+                <div class="form-group">
+                    <label for="title"><strong>Title</strong></label>
+                    <input type="text" name="title" class="form-control" id="title"
+                        placeholder="Give the new activity a name..." required ngModel>
+                </div>
+
+                <div class="form-group">
+                    <label for="description"><strong>Description</strong></label>
+                    <input type="text" name="description" class="form-control" id="description"
+                        placeholder="Give the new activity a description..." required ngModel>
+                </div>
+
+
+
+                <div class="modal-footer">
+                    <button type="button" id="modal-close" class="button is-danger" aria-label="close"
+                        (click)="closeModal()">Close</button>
+
+                    <button [disabled]="addActivityForm.invalid" type="submit" class="button is-success">Save
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div> -->
+
+
 <div class="modal fade" id="eventModel" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">

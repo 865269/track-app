@@ -57,10 +57,10 @@ export class ActivitiesComponent implements OnInit {
   }
 
   addActivity(addActivityForm: NgForm): void {
-    document.getElementById('add-activity-close')?.click();
+    this.closeModal();
     this.activityService.addActivity(addActivityForm.value).subscribe(
       (response: Activity) => {
-        this.getPageOfActivities(this.currentPageNumber, 3);
+        this.getPageForScreenSize(this.innerWidth, this.currentPageNumber);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -72,7 +72,7 @@ export class ActivitiesComponent implements OnInit {
   updateActivity(activity: Activity): void {
     this.activityService.updateActivity(activity).subscribe(
       (response: Activity) => {
-        this.getPageOfActivities(this.currentPageNumber, 3);
+        this.getPageForScreenSize(this.innerWidth, this.currentPageNumber);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -85,7 +85,7 @@ export class ActivitiesComponent implements OnInit {
     if (confirm("Are you sure you want to delete " + activityTitle)) {
       this.activityService.deleteActivity(activityId).subscribe(
         () => {
-          this.getActivities();
+          this.getPageForScreenSize(this.innerWidth, this.currentPageNumber);
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
@@ -135,6 +135,27 @@ export class ActivitiesComponent implements OnInit {
     } else {
       this.getPageOfActivities(page, 3);
     }
+  }
+
+  public openModal(): void {
+    const modal = document.querySelector('.modal');
+    modal?.classList.add("is-active");
+  }
+
+  public closeModal(): void {
+    const modal = document.querySelector('.modal');
+    modal?.classList.remove("is-active");
+  }
+
+  public truncateDescription(input: any): string {
+    let desc: string = input;
+
+    if (desc.length > 40) {
+      desc = desc.substring(0, 35);
+      desc = desc + "...";
+    }
+
+    return desc;
   }
 
 }

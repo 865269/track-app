@@ -89,5 +89,25 @@ export class ActivityEventsComponent implements OnInit {
     this.getActivity(this.id);
   }
 
+  public truncateDescription(input: any): string {
+    let desc: string = input;
+
+    if (desc.length > 40) {
+      desc = desc.substring(0, 35);
+      desc = desc + "...";
+    }
+
+    return desc;
+  }
+
+  public parseDate(date: String): Date {
+    let newDate: Date = new Date();
+
+    console.log("date", date)
+    console.log("new date", newDate)
+
+    return newDate;
+  }
+
 }
 
