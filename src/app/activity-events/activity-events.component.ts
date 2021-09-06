@@ -5,6 +5,8 @@ import { ActivatedRoute, provideRoutes } from '@angular/router';
 import { Activity } from '../activities/activity';
 import { ActivityService } from '../services/activity-service';
 import { Rating } from './rating';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-activity-events',
@@ -68,7 +70,7 @@ export class ActivityEventsComponent implements OnInit {
   }
 
   addEvent(addEventForm: NgForm): void {
-    document.getElementById('add-event-close')?.click();
+    this.closeModal();
     this.activityService.addEvent(addEventForm.value, this.id).subscribe(
       (response: Event) => {
         this.getActivity(this.id);
@@ -89,24 +91,18 @@ export class ActivityEventsComponent implements OnInit {
     this.getActivity(this.id);
   }
 
-  public truncateDescription(input: any): string {
-    let desc: string = input;
-
-    if (desc.length > 40) {
-      desc = desc.substring(0, 35);
-      desc = desc + "...";
-    }
-
-    return desc;
+  public parseJavaDate(date: Date): Date {
+    return new Date(date.toString());
   }
 
-  public parseDate(date: String): Date {
-    let newDate: Date = new Date();
+  public openModal(): void {
+    const modal = document.querySelector('.modal');
+    modal?.classList.add("is-active");
+  }
 
-    console.log("date", date)
-    console.log("new date", newDate)
-
-    return newDate;
+  public closeModal(): void {
+    const modal = document.querySelector('.modal');
+    modal?.classList.remove("is-active");
   }
 
 }
