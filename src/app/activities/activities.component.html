@@ -4,9 +4,9 @@
     <div class="container">
 
         <div class="columns">
-            <div class="column">
+            <div class="column is-12" style="display: flex; justify-content: center;">
                 <button id="modal-open" class="button is-success is-rounded" data-target="#modal"
-                    (click)="openModal()"><strong>Activity</strong></button>
+                    (click)="openModal()"><strong>New Activity</strong></button>
             </div>
         </div>
 
@@ -27,7 +27,8 @@
                         <div class="media-content">
 
                             <div class="form-group">
-                                <p class="title is-4" *ngIf="!activity.canEditCode">{{activity?.title}}</p>
+                                <p class="title is-4" *ngIf="!activity.canEditCode" style="text-align: center;">
+                                    {{activity?.title}}</p>
 
                                 <input *ngIf="activity.canEditCode" [(ngModel)]="activity.title" type="text"
                                     class="form-control" />

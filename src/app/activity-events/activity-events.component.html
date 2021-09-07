@@ -18,7 +18,8 @@
                             <div class="media">
                                 <div class="media-content">
                                     <div class="form-group">
-                                        <p class="title is-4" *ngIf="!activity.canEditCode">{{activity?.title}}</p>
+                                        <p class="title is-4" *ngIf="!activity.canEditCode" style="text-align: center;">
+                                            {{activity?.title}}</p>
 
                                         <input *ngIf="activity.canEditCode" [(ngModel)]="activity.title" type="text"
                                             class="form-control" />
@@ -67,7 +68,7 @@
 
                 <div class="columns">
                     <div class="column is-three-quarters">
-                        <h1 class="is-size-3">Events</h1>
+                        <h1 class="is-size-3">Recent Events</h1>
                     </div>
                     <div class="column">
                         <button id="modal-open" class="button is-success is-rounded" data-target="#modal"
@@ -83,31 +84,37 @@
                     <div class="card content">
                         <article class="media" *ngFor="let event of activity.events | orderBy:'desc':'created'">
 
-                            <figure class="media-left">
-                                <p class="image is-96x96">
-
-                                    <span class="tag is-success"
-                                        *ngIf="event.rating == 'EXCELLENT' || event.rating == 'GOOD'"
-                                        style="width: 100%;">{{event?.rating}}</span>
-
-                                    <span class="tag is-warning" *ngIf="event.rating == 'AVERAGE'"
-                                        style="width: 100%;">{{event?.rating}}</span>
-
-                                    <span class="tag is-danger"
-                                        *ngIf="event.rating == 'POOR' || event.rating == 'BELOW_AVERAGE'"
-                                        style="width: 100%;">{{event?.rating.replace("_","
-                                        ")}}</span>
-                                </p>
-                            </figure>
                             <div class="media-content">
                                 <div class="content">
-                                    <p>
-                                        <strong>{{event?.title}}</strong>
-                                        <br>
-                                        {{event?.description}}
-                                        <br>
+                                    <div style="padding-left: 2%; padding-right: 2%; padding-top: 1%">
+
+                                        <div class="columns">
+                                            <div class="column is-four-fifths">
+                                                <strong>{{event?.title}}</strong>
+                                                <br>
+                                                {{event?.description}}
+                                            </div>
+                                            <div class="column">
+                                                <span class="tag is-success is-pulled-right"
+                                                    *ngIf="event.rating == 'EXCELLENT' || event.rating == 'GOOD'"
+                                                    style="width: 100%;">{{event?.rating}}</span>
+
+                                                <span class="tag is-warning is-pulled-right"
+                                                    *ngIf="event.rating == 'AVERAGE'"
+                                                    style="width: 100%;">{{event?.rating}}</span>
+
+                                                <span class="tag is-danger is-pulled-right"
+                                                    *ngIf="event.rating == 'POOR' || event.rating == 'BELOW_AVERAGE'"
+                                                    style="width: 100%;">{{event?.rating.replace("_","
+                                                    ")}}</span>
+                                            </div>
+
+                                        </div>
+
+
+
                                         <small>{{parseJavaDate(event?.created) | timeAgo}}</small>
-                                    </p>
+                                    </div>
                                 </div>
 
                             </div>

@@ -5,3 +5,6 @@ html, body {
 body {
     height:100vh;
 }
+.navbar-item {
+    color: white;
+  }

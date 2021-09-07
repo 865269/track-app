@@ -9,6 +9,7 @@ import { ActivityEventsComponent } from './activity-events/activity-events.compo
 import { ActivitiesComponent } from './activities/activities.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { NgPipesModule } from 'ngx-pipes';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { NgPipesModule } from 'ngx-pipes';
     AppComponent,
     ActivityEventsComponent,
     ActivitiesComponent,
-    OrderByPipe
+    OrderByPipe,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
